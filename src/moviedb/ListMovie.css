@@ -1,0 +1,17 @@
+.mainDiv {
+    text-overflow: "ellipsis";
+    overflow: "hidden";
+    width: "200px";
+    height: "250px";
+}
+.imgStyle {
+    width: "100px";
+    height: "250px";
+}
+.pStyle {
+    width: "20px";
+    height: "20px";
+    text-overflow: "ellipsis";
+    white-space: "nowrap";
+    overflow: "hidden";
+}
