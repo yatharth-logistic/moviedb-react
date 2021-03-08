@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import ListMovie from './moviedb/ListMovie';
+import Moviedb from './moviedb/Moviedb';
 
 ReactDOM.render(
     <React.StrictMode>
-        <ListMovie />
+        <Moviedb />
     </React.StrictMode>,
     document.getElementById('root')
 );

@@ -63,7 +63,7 @@ class BsModal extends React.Component {
                     movieInfo: res.data,
                     // loader: false,
                 });
-            }, 3000);
+            }, 1000);
         }).catch(error => { });
     }
     render() {
