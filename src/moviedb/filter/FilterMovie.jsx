@@ -2,6 +2,7 @@ import React from 'react';
 import 'react-date-range/dist/styles.css'; // main css file
 import 'react-date-range/dist/theme/default.css'; // theme css file
 import { DateRangePicker } from 'react-date-range';
+import moment from 'moment';
 
 class FilterMovie extends React.Component {
 
@@ -18,13 +19,22 @@ class FilterMovie extends React.Component {
     }
 
     handleSortChange = (event) => {
-        this.setState({
-            sort_by: event.target.value,
-        });
+        const sortBy = event.target.value;
+        if (sortBy) {
+            this.setState({
+                sort_by: sortBy
+            });
+            this.props.sortChange(sortBy);
+        }
     }
 
     handleDateRangeChange = (item) => {
-        console.log(item);
+        if (item.selection) {
+            const stDate = moment(item.selection.startDate).format('YYYY-MM-DD');
+            const enDate = moment(item.selection.endDate).format('YYYY-MM-DD');
+            console.log('start date', stDate, 'end date', enDate);
+            this.props.dateChange(stDate, enDate);
+        }
     }
 
     render() {
@@ -34,6 +44,7 @@ class FilterMovie extends React.Component {
                     <div className="col-md-3 p-4">
                         <label htmlFor="sort_by">Sort By</label>
                         <select name="sort_by" className="form-select" id="sort_by" value={this.state.sort_by} onChange={this.handleSortChange}>
+                            <option value="">--select any sort order--</option>
                             <option value="popularity.asc">Popularity Asc</option>
                             <option value="popularity.desc">Popularity Desc</option>
                             <option value="release_date.asc">Release Date Asc</option>

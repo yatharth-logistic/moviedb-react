@@ -9,7 +9,12 @@ class ListMovie extends React.Component {
         this.state = {
             movieList: [],
             modal: false,
-            movieId: null
+            movieId: null,
+            sortValue: 'popularity.desc',
+            dates: {
+                releaseDateGte: '',
+                releaseDateLte: '',
+            }
         }
     };
 
@@ -22,11 +27,28 @@ class ListMovie extends React.Component {
         this.getMoviesList();
     }
 
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        console.log('yes component is updated');
+        if (this.props.dates.releaseDateGte !== prevProps.dates.releaseDateGte || this.props.dates.releaseDateLte !== prevProps.dates.releaseDateLte || this.props.sortBy !== prevProps.sortBy) {
+            console.log('in true part date change section');
+            this.setState({
+                dates: this.props.dates,
+                movieList: [],
+                sortValue: this.props.sortBy
+            });
+            this.page = 1;
+            setTimeout(() => {
+                this.getMoviesList();
+            }, 300);
+        }
+    }
+
     getMoviesList = async () => {
         let movieList = null;
+        console.log(this.state.dates);
         await axios({
             method: 'GET',
-            url: 'https://api.themoviedb.org/3/discover/movie?api_key=a0acb84bc12a6a187fbf5cf4431ea867&page=' + this.page,
+            url: `https://api.themoviedb.org/3/discover/movie?api_key=a0acb84bc12a6a187fbf5cf4431ea867&release_date.gte=${this.state.dates.releaseDateGte}&release_date.lte=${this.state.dates.releaseDateLte}&sort_by=${this.state.sortValue}&page=${this.page}`,
         }).then(res => {
             const results = res.data.results;
             movieList = results;
