@@ -19,7 +19,7 @@ class Moviedb extends React.Component {
     }
 
     componentDidMount() {
-        axios.interceptors.response.use(res => res, error => {
+        axios.interceptors.response.use((res) => res, (error) => {
             console.log(error);
         });
     }

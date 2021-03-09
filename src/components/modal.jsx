@@ -80,7 +80,7 @@ class BsModal extends React.Component {
                                             <div className="row m-1">
                                                 <div className="col-md-4 py-4 mr-2 pr-0" style={mxw}>
                                                     <img className="poster_image rounded shadow-lg"
-                                                        src={'https://www.themoviedb.org/t/p/w300_and_h450_bestv2/' + this.state.movieInfo.poster_path}
+                                                        src={'https://www.themoviedb.org/t/p/w300_and_h450_bestv2' + this.state.movieInfo.poster_path}
                                                         style={ratio} alt="Poster of moive" />
                                                 </div>
                                                 <div className="col-md-6 mt-5 ml-3" style={{ marginLeft: '2em' }}>

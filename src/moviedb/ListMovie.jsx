@@ -26,14 +26,11 @@ class ListMovie extends React.Component {
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (JSON.stringify(prevProps.getFilter) !== JSON.stringify(this.props.getFilter)) {
+            this.page = 1;
             this.setState({
                 filter: this.props.getFilter,
                 movieList: [],
-            });
-            this.page = 1;
-            setTimeout(() => {
-                this.getMoviesList();
-            }, 300);
+            }, this.getMoviesList);
         }
     }
 

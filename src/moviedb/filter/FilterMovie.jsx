@@ -3,7 +3,7 @@ import 'react-date-range/dist/styles.css'; // main css file
 import 'react-date-range/dist/theme/default.css'; // theme css file
 import { DateRangePicker } from 'react-date-range';
 import moment from 'moment';
-import $ from 'jquery';
+// import $ from 'jquery';
 
 class FilterMovie extends React.Component {
 
@@ -50,6 +50,16 @@ class FilterMovie extends React.Component {
         this.props.setFilter(change);
     }
 
+    componentDidMount() {
+        /* $(function () {
+            $('input[name="daterange"]').daterangepicker({
+                opens: 'left'
+            }, function (start, end, label) {
+                console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+            });
+        }); */
+    }
+
     render() {
         return (
             <div className="container-fluid">
@@ -65,12 +75,13 @@ class FilterMovie extends React.Component {
                             })}
                         </select>
                     </div>
-                    <div className="col-md-3">
+                    <div className="col-md-3 mt-4 pt-4">
                         <DateRangePicker
                             ranges={this.state.range}
                             onChange={item => this.filterChange(item)}
                             editableDateInputs={true}
                         />
+                        {/* <input type="text" name="daterange" onChange={() => { }} value="01/01/2018 - 01/15/2018" className="form-control" /> */}
                     </div>
                 </div>
             </div>
