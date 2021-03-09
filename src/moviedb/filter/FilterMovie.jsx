@@ -1,9 +1,7 @@
 import React from 'react';
-import 'react-date-range/dist/styles.css'; // main css file
-import 'react-date-range/dist/theme/default.css'; // theme css file
-import { DateRangePicker } from 'react-date-range';
 import moment from 'moment';
-// import $ from 'jquery';
+import DateRangePicker from 'react-bootstrap-daterangepicker';
+import 'bootstrap-daterangepicker/daterangepicker.css';
 
 class FilterMovie extends React.Component {
 
@@ -43,9 +41,9 @@ class FilterMovie extends React.Component {
             });
             change.sortValue = event.target.value;
         }
-        if (event.selection) {
-            change.dates.releaseDateGte = moment(event.selection.startDate).format('YYYY-MM-DD');
-            change.dates.releaseDateLte = moment(event.selection.endDate).format('YYYY-MM-DD');
+        if (event.endDate || event.startDate) {
+            change.dates.releaseDateGte = event.startDate.format('YYYY-MM-DD');
+            change.dates.releaseDateLte = event.endDate.format('YYYY-MM-DD');
         }
         this.props.setFilter(change);
     }
@@ -76,12 +74,9 @@ class FilterMovie extends React.Component {
                         </select>
                     </div>
                     <div className="col-md-3 mt-4 pt-4">
-                        <DateRangePicker
-                            ranges={this.state.range}
-                            onChange={item => this.filterChange(item)}
-                            editableDateInputs={true}
-                        />
-                        {/* <input type="text" name="daterange" onChange={() => { }} value="01/01/2018 - 01/15/2018" className="form-control" /> */}
+                        <DateRangePicker initialSettings={{ startDate: new Date(), endDate: new Date() }} onApply={(event, picker) => this.filterChange(picker)} >
+                            <button tyep="button" className="btn btn-outline-primary">Select Date Range</button>
+                        </DateRangePicker>
                     </div>
                 </div>
             </div>
