@@ -1,41 +1,40 @@
 import React from 'react';
 import ListMovie from './ListMovie';
 import FilterMovie from './filter/FilterMovie';
+import axios from 'axios';
 
 class Moviedb extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            sortValue: '',
-            dates: {
-                releaseDateGte: '',
-                releaseDateLte: ''
+            filter: {
+                sortValue: 'popularity.desc',
+                dates: {
+                    releaseDateGte: '',
+                    releaseDateLte: '',
+                }
             }
         };
     }
 
-    setDateChange = (startDate, endDate) => {
-        console.log('setDateChange function is called');
-        this.setState({
-            dates: {
-                releaseDateGte: startDate,
-                releaseDateLte: endDate,
-            }
+    componentDidMount() {
+        axios.interceptors.response.use(res => res, error => {
+            console.log(error);
         });
     }
 
-    setSortChange = (sortBy) => {
+    setFilterChange = (change) => {
         this.setState({
-            sortValue: sortBy
+            filter: change
         });
     }
 
     render() {
         return (
             <div className="container-fluid">
-                <FilterMovie dateChange={this.setDateChange} sortChange={this.setSortChange} />
-                <ListMovie dates={this.state.dates} sortBy={this.state.sortValue} />
+                <FilterMovie setFilter={this.setFilterChange} />
+                <ListMovie getFilter={this.state.filter} />
             </div>
         );
     }

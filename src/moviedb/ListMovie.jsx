@@ -10,31 +10,25 @@ class ListMovie extends React.Component {
             movieList: [],
             modal: false,
             movieId: null,
-            sortValue: 'popularity.desc',
-            dates: {
-                releaseDateGte: '',
-                releaseDateLte: '',
+            filter: {
+                sortValue: 'popularity.desc',
+                dates: {
+                    releaseDateGte: '',
+                    releaseDateLte: '',
+                }
             }
         }
     };
-
-    componentDidCatch(error, errorInfo) {
-        // You can also log the error to an error reporting service
-        console.log(error, 'errorinfo ', errorInfo);
-    }
 
     componentDidMount() {
         this.getMoviesList();
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        console.log('yes component is updated');
-        if (this.props.dates.releaseDateGte !== prevProps.dates.releaseDateGte || this.props.dates.releaseDateLte !== prevProps.dates.releaseDateLte || this.props.sortBy !== prevProps.sortBy) {
-            console.log('in true part date change section');
+        if (JSON.stringify(prevProps.getFilter) !== JSON.stringify(this.props.getFilter)) {
             this.setState({
-                dates: this.props.dates,
+                filter: this.props.getFilter,
                 movieList: [],
-                sortValue: this.props.sortBy
             });
             this.page = 1;
             setTimeout(() => {
@@ -45,16 +39,13 @@ class ListMovie extends React.Component {
 
     getMoviesList = async () => {
         let movieList = null;
-        console.log(this.state.dates);
         await axios({
             method: 'GET',
-            url: `https://api.themoviedb.org/3/discover/movie?api_key=a0acb84bc12a6a187fbf5cf4431ea867&release_date.gte=${this.state.dates.releaseDateGte}&release_date.lte=${this.state.dates.releaseDateLte}&sort_by=${this.state.sortValue}&page=${this.page}`,
+            url: `https://api.themoviedb.org/3/discover/movie?api_key=a0acb84bc12a6a187fbf5cf4431ea867&release_date.gte=${this.state.filter.dates.releaseDateGte}&release_date.lte=${this.state.filter.dates.releaseDateLte}&sort_by=${this.state.filter.sortValue}&page=${this.page}`,
         }).then(res => {
             const results = res.data.results;
             movieList = results;
             this.page++;
-        }).catch(error => {
-            console.log('error in axios:- ', error);
         });
 
         this.setState({
@@ -62,29 +53,20 @@ class ListMovie extends React.Component {
         })
     }
 
-    openModal = (movieId = null) => (e) => {
-        this.setState({
-            modal: true,
-            movieId: movieId
-        });
-    }
-
-    hideModal = () => {
-        this.setState({
-            modal: false,
-        });
-    }
-
-    /* renderBsModal = () => {
-        if (this.state.modal) {
-            console.log('rendering BsModal now');
-            return (<BsModal isModalOpen={this.state.modal} movieId={this.state.movieId} hideModal={this.hideModal} />);
+    hideModal = (movieId = null) => {
+        if (movieId !== null && this.state.movieId == null) {
+            this.setState({
+                modal: true,
+                movieId: movieId
+            });
         }
-        else {
-            console.log('There is no rendering bs modal now');
-            return;
+        if (movieId == null) {
+            this.setState({
+                modal: false,
+                movieId: null
+            });
         }
-    } */
+    }
 
     render() {
         const mainDiv = {
@@ -112,7 +94,7 @@ class ListMovie extends React.Component {
                             <div key={movie.id} className="rounded shadow text-break col-md-3 m-5" style={mainDiv}>
                                 <div className="row">
                                     <div className="col-md">
-                                        <img src={'https://image.tmdb.org/t/p/original/' + movie.poster_path} style={imgStyle} className="rounded" alt={movie.original_title} onClick={this.openModal(movie.id)} />
+                                        <img src={'https://image.tmdb.org/t/p/original/' + movie.poster_path} style={imgStyle} className="rounded" alt={movie.original_title} onClick={() => this.hideModal(movie.id)} />
                                     </div>
                                     <div className="col-md">
                                         <strong>Title</strong>

@@ -13,23 +13,6 @@ class BsModal extends React.Component {
         };
         this.timeOut = null;
     }
-    /* componentDidUpdate(prevProps, prevState, snapshot) {
-        if (prevProps.isModalOpen !== this.props.isModalOpen && this.props.isModalOpen) {
-            const modalEl = document.getElementById('movieInfoModal');
-            const modalInstance = new window.bootstrap.Modal(modalEl, {});
-            modalInstance.show();
-
-            modalEl.addEventListener('hide.bs.modal', (event) => {
-                console.log('modal is now going to hide', this.props.isModalOpen);
-                this.props.hideModal();
-                this.setState({
-                    movieInfo: {}
-                });
-                modalEl.removeEventListener('hide.bs.modal', event.target);
-            });
-            this.getMovieInfo();
-        }
-    } */
 
     componentDidMount() {
         const modalEl = document.getElementById('movieInfoModal');
@@ -42,7 +25,7 @@ class BsModal extends React.Component {
                 movieInfo: {}
             });
             clearTimeout(this.timeOut);
-            this.props.hideModal();
+            this.props.hideModal(null);
         });
     }
 
@@ -64,7 +47,7 @@ class BsModal extends React.Component {
                     // loader: false,
                 });
             }, 1000);
-        }).catch(error => { });
+        });
     }
     render() {
         const ratio = {

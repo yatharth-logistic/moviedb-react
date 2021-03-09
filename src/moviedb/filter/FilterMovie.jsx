@@ -3,6 +3,7 @@ import 'react-date-range/dist/styles.css'; // main css file
 import 'react-date-range/dist/theme/default.css'; // theme css file
 import { DateRangePicker } from 'react-date-range';
 import moment from 'moment';
+import $ from 'jquery';
 
 class FilterMovie extends React.Component {
 
@@ -14,27 +15,39 @@ class FilterMovie extends React.Component {
                 startDate: new Date(),
                 endDate: new Date(),
                 key: 'selection'
-            }]
+            }],
+            sortOptions: [
+                { value: 'popularity.asc', text: 'Popularity Asc' },
+                { value: 'popularity.desc', text: 'Popularity Desc' },
+                { value: 'release_date.asc', text: 'Release Date Asc' },
+                { value: 'release_date.desc', text: 'Release Date Desc' },
+                { value: 'revenue.asc', text: 'Revenue Asc' },
+                { value: 'revenue.desc', text: 'Revenue Desc' },
+                { value: 'primary_release_date.asc', text: 'Primary Release Date Asc' },
+                { value: 'primary_release_date.desc', text: 'Primary Release Date Desc' }
+            ],
         };
     }
 
-    handleSortChange = (event) => {
-        const sortBy = event.target.value;
-        if (sortBy) {
+    filterChange = (event) => {
+        let change = {
+            sortValue: 'popularity.desc',
+            dates: {
+                releaseDateGte: '',
+                releaseDateLte: '',
+            }
+        };
+        if (event.target && event.target.getAttribute('name') === 'sort_by') {
             this.setState({
-                sort_by: sortBy
+                sort_by: event.target.value
             });
-            this.props.sortChange(sortBy);
+            change.sortValue = event.target.value;
         }
-    }
-
-    handleDateRangeChange = (item) => {
-        if (item.selection) {
-            const stDate = moment(item.selection.startDate).format('YYYY-MM-DD');
-            const enDate = moment(item.selection.endDate).format('YYYY-MM-DD');
-            console.log('start date', stDate, 'end date', enDate);
-            this.props.dateChange(stDate, enDate);
+        if (event.selection) {
+            change.dates.releaseDateGte = moment(event.selection.startDate).format('YYYY-MM-DD');
+            change.dates.releaseDateLte = moment(event.selection.endDate).format('YYYY-MM-DD');
         }
+        this.props.setFilter(change);
     }
 
     render() {
@@ -43,22 +56,19 @@ class FilterMovie extends React.Component {
                 <div className="row">
                     <div className="col-md-3 p-4">
                         <label htmlFor="sort_by">Sort By</label>
-                        <select name="sort_by" className="form-select" id="sort_by" value={this.state.sort_by} onChange={this.handleSortChange}>
+                        <select name="sort_by" className="form-select" id="sort_by" value={this.state.sort_by} onChange={this.filterChange}>
                             <option value="">--select any sort order--</option>
-                            <option value="popularity.asc">Popularity Asc</option>
-                            <option value="popularity.desc">Popularity Desc</option>
-                            <option value="release_date.asc">Release Date Asc</option>
-                            <option value="release_date.desc">Release Date Desc</option>
-                            <option value="revenue.asc">Revenue Asc</option>
-                            <option value="revenue.desc">Revenue Desc</option>
-                            <option value="primary_release_date.asc">Primary Release Date Asc</option>
-                            <option value="primary_release_date.desc">Primary Release Date Desc</option>
+                            {this.state.sortOptions.map((option, index) => {
+                                return (
+                                    <option key={index} value={option.value}>{option.text}</option>
+                                );
+                            })}
                         </select>
                     </div>
                     <div className="col-md-3">
                         <DateRangePicker
                             ranges={this.state.range}
-                            onChange={item => this.handleDateRangeChange(item)}
+                            onChange={item => this.filterChange(item)}
                             editableDateInputs={true}
                         />
                     </div>
