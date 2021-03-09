@@ -10,13 +10,6 @@ class ListMovie extends React.Component {
             movieList: [],
             modal: false,
             movieId: null,
-            filter: {
-                sortValue: 'popularity.desc',
-                dates: {
-                    releaseDateGte: '',
-                    releaseDateLte: '',
-                }
-            }
         }
     };
 
@@ -25,10 +18,10 @@ class ListMovie extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if (JSON.stringify(prevProps.getFilter) !== JSON.stringify(this.props.getFilter)) {
+        if (JSON.stringify(prevProps.filterData) !== JSON.stringify(this.props.filterData)) {
             this.page = 1;
             this.setState({
-                filter: this.props.getFilter,
+                filter: this.props.filterData,
                 movieList: [],
             }, this.getMoviesList);
         }
@@ -38,7 +31,7 @@ class ListMovie extends React.Component {
         let movieList = null;
         await axios({
             method: 'GET',
-            url: `https://api.themoviedb.org/3/discover/movie?api_key=a0acb84bc12a6a187fbf5cf4431ea867&release_date.gte=${this.state.filter.dates.releaseDateGte}&release_date.lte=${this.state.filter.dates.releaseDateLte}&sort_by=${this.state.filter.sortValue}&page=${this.page}`,
+            url: `https://api.themoviedb.org/3/discover/movie?api_key=a0acb84bc12a6a187fbf5cf4431ea867&release_date.gte=${this.props.filterData.dates.releaseDateGte}&release_date.lte=${this.props.filterData.dates.releaseDateLte}&sort_by=${this.props.filterData.sortValue}&page=${this.page}`,
         }).then(res => {
             const results = res.data.results;
             movieList = results;
@@ -50,19 +43,11 @@ class ListMovie extends React.Component {
         })
     }
 
-    hideModal = (movieId = null) => {
-        if (movieId !== null && this.state.movieId == null) {
-            this.setState({
-                modal: true,
-                movieId: movieId
-            });
-        }
-        if (movieId == null) {
-            this.setState({
-                modal: false,
-                movieId: null
-            });
-        }
+    toggleModal = (flag = false, movieId = null) => {
+        this.setState({
+            modal: flag,
+            movieId: movieId
+        })
     }
 
     render() {
@@ -91,7 +76,7 @@ class ListMovie extends React.Component {
                             <div key={movie.id} className="rounded shadow text-break col-md-3 m-5" style={mainDiv}>
                                 <div className="row">
                                     <div className="col-md">
-                                        <img src={'https://image.tmdb.org/t/p/original/' + movie.poster_path} style={imgStyle} className="rounded" alt={movie.original_title} onClick={() => this.hideModal(movie.id)} />
+                                        <img src={'https://image.tmdb.org/t/p/original/' + movie.poster_path} style={imgStyle} className="rounded" alt={movie.original_title} onClick={() => this.toggleModal(true, movie.id)} />
                                     </div>
                                     <div className="col-md">
                                         <strong>Title</strong>
@@ -123,7 +108,7 @@ class ListMovie extends React.Component {
                     </div>
                 </div>
                 {this.state.modal && (
-                    <BsModal isModalOpen={this.state.modal} movieId={this.state.movieId} hideModal={this.hideModal} />
+                    <BsModal isModalOpen={this.state.modal} movieId={this.state.movieId} hideModal={this.toggleModal} />
                 )}
             </div >
         );

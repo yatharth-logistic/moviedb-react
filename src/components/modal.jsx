@@ -25,7 +25,7 @@ class BsModal extends React.Component {
                 movieInfo: {}
             });
             clearTimeout(this.timeOut);
-            this.props.hideModal(null);
+            this.props.hideModal(false);
         });
     }
 

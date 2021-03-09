@@ -34,7 +34,7 @@ class Moviedb extends React.Component {
         return (
             <div className="container-fluid">
                 <FilterMovie setFilter={this.setFilterChange} />
-                <ListMovie getFilter={this.state.filter} />
+                <ListMovie filterData={this.state.filter} />
             </div>
         );
     }
