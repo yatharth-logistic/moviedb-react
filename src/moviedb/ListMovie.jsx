@@ -55,27 +55,16 @@ class ListMovie extends React.Component {
         return (
             <div className="movie">
                 <div className="c-container">
-                    <div id="add_movie" className="c-row c-colum movie-space">
+                    <div id="add_movie" className="c-row movie-space">
                         {this.state.movieList.map((movie) => (
                             <div key={movie.id} className="c-card">
                                 <div className="">
                                     <img src={'https://image.tmdb.org/t/p/original/' + movie.poster_path} className="c-img" alt={movie.original_title} onClick={() => this.toggleModal(true, movie.id)} />
                                 </div>
                                 <div className="c-text-content">
-                                    <div>Title</div>
-                                    <div><a rel="noreferrer" href={'movie_page.php?movie_id=' + movie.id} target="_blank">{movie.original_title}</a></div>
-                                    <div>Overview</div>
-                                    <div>
-                                        {movie.overview}
-                                    </div>
-                                    <div>Popularity</div>
-                                    <div>{movie.popularity}</div>
-                                    <div>Release Date</div>
+                                    <div className="c-vote">{movie.vote_average}</div>
+                                    <div>{movie.original_title}</div>
                                     <div>{movie.release_date}</div>
-                                    <div>Average Vote</div>
-                                    <div>{movie.vote_average}</div>
-                                    <div>Total Vote</div>
-                                    <div>{movie.vote_count}</div>
                                 </div>
                             </div>
                         ))}
