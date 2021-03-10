@@ -1,5 +1,6 @@
 .movie .c-container {
     display: flex;
+    flex: 1;
 }
 .movie .c-row {
     display: flex;
@@ -7,10 +8,9 @@
 }
 
 .movie .c-card {
-    width: 15%;
     margin: 0.5em;
     /* border: 1px solid red; */
-    text-align: center;
+    text-align: left;
 }
 
 .movie .c-col {
@@ -25,26 +25,37 @@
 }
 
 .movie .c-text-content {
-    word-break: break-all;
-    /* width: 300px; */
     display: flex;
+    margin-top: 1em;
     position: relative;
     flex-direction: column;
 }
 
 .movie .c-vote {
     position: absolute;
+    height: 2.4em;
+    width: 2.4em;
     border-radius: 50%;
     display: flex;
     align-items: center;
-    right: 0%;
-    top: -44px;
     justify-content: center;
-    color: silver;
+    right: 0%;
+    top: -100%;
     border: 1px solid green;
     background-color: black;
-    height: 3em;
-    width: 3em;
+    color: silver;
+}
+
+.movie .c-movie-title {
+    width: 150px;
+    /* overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical; */
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 .movie .movie-space {

@@ -3,14 +3,22 @@ body {
     height: 100%;
     width: 100%;
 }
+
+#root {
+    height: 100%;
+    width: 100%;
+}
+
 .c-container {
     /* border: 1px solid; */
     display: flex;
     flex-direction: column;
+    height: 100%;
 }
 
 .c-navbar {
-    background-color: rgb(145, 190, 226);
+    /* background-color: rgb(145, 190, 226); */
+    background-color: red;
     height: 100px;
     display: flex;
     justify-content: center;
@@ -21,6 +29,7 @@ body {
 
 .c-main-content {
     display: flex;
+    flex: 1;
     /* border: 1px solid; */
 }
 

@@ -63,7 +63,7 @@ class ListMovie extends React.Component {
                                 </div>
                                 <div className="c-text-content">
                                     <div className="c-vote">{movie.vote_average}</div>
-                                    <div>{movie.original_title}</div>
+                                    <div className="c-movie-title">{movie.original_title}</div>
                                     <div>{movie.release_date}</div>
                                 </div>
                             </div>
