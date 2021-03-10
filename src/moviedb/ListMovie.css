@@ -1,17 +1,35 @@
-.mainDiv {
-    text-overflow: "ellipsis";
-    overflow: "hidden";
-    width: "200px";
-    height: "250px";
+.movie .c-container {
+    display: flex;
 }
-.imgStyle {
-    width: "100px";
-    height: "250px";
+.movie .c-row {
+    display: flex;
+    flex-wrap: wrap;
 }
-.pStyle {
-    width: "20px";
-    height: "20px";
-    text-overflow: "ellipsis";
-    white-space: "nowrap";
-    overflow: "hidden";
+
+.movie .c-card {
+    /* width: 5em; */
+    margin: 1em;
+}
+
+.movie .c-col {
+    padding: 1em;
+    display: flex;
+}
+
+.movie .c-img {
+    height: 200px;
+    border-radius: 5px;
+    width: 200px;
+}
+
+.movie .c-text-content {
+    word-break: break-all;
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+}
+
+.movie .movie-space {
+    height: 35rem;
+    overflow-y: scroll;
 }

@@ -2,6 +2,7 @@ import React from 'react';
 import moment from 'moment';
 import DateRangePicker from 'react-bootstrap-daterangepicker';
 import 'bootstrap-daterangepicker/daterangepicker.css';
+import './FilterMovie.css';
 
 class FilterMovie extends React.Component {
 
@@ -50,9 +51,9 @@ class FilterMovie extends React.Component {
 
     render() {
         return (
-            <div className="container-fluid">
-                <div className="row">
-                    <div className="col-md-3 p-4">
+            <div className="filter">
+                <div className="c-row">
+                    <div className="c-col">
                         <label htmlFor="sort_by">Sort By</label>
                         <select name="sort_by" className="form-select" id="sort_by" value={this.state.sort_by} onChange={this.filterChange}>
                             <option value="">--select any sort order--</option>
@@ -63,13 +64,14 @@ class FilterMovie extends React.Component {
                             })}
                         </select>
                     </div>
-                    <div className="col-md-3 mt-4 pt-4">
+                    <div className="c-col">
                         <DateRangePicker initialSettings={{ startDate: new Date(), endDate: new Date() }} onApply={(event, picker) => this.filterChange(picker)} >
                             <button tyep="button" className="btn btn-outline-primary">Select Date Range</button>
                         </DateRangePicker>
                     </div>
                 </div>
             </div>
+
         );
     }
 }

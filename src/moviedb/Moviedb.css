@@ -1,0 +1,62 @@
+html,
+body {
+    height: 100%;
+    width: 100%;
+}
+.c-container {
+    /* border: 1px solid; */
+    display: flex;
+    flex-direction: column;
+}
+
+.c-navbar {
+    background-color: rgb(145, 190, 226);
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    font-size: large;
+}
+
+.c-main-content {
+    display: flex;
+    /* border: 1px solid; */
+}
+
+.c-sidebar {
+    background-color: lightgray;
+    width: 15em;
+}
+
+.c-content {
+    /* border: 1px solid; */
+    flex: 1;
+    flex-direction: column;
+}
+
+aside ul {
+    padding: 0%;
+}
+aside ul li {
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    background-color: rgb(186, 229, 186);
+    /* border-bottom: 1px solid; */
+    transition: 0.5s;
+}
+
+aside ul li a {
+    text-decoration: none;
+    color: black;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+aside ul li > a:hover {
+    color: black;
+}
+aside ul li:hover {
+    background-color: rgba(35, 153, 108, 0.644);
+}

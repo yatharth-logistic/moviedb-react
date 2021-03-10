@@ -1,0 +1,9 @@
+.filter .c-row {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.filter .c-col {
+    padding: 1em;
+    display: flex;
+}
