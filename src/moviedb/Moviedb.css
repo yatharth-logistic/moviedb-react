@@ -20,6 +20,9 @@ body {
     /* background-color: rgb(145, 190, 226); */
     background-color: red;
     height: 100px;
+    /* top: 0; */
+    min-height: 100px;
+    /* position: sticky; */
     display: flex;
     justify-content: center;
     align-items: center;
