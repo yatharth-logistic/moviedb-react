@@ -3,18 +3,19 @@ import moment from 'moment';
 import DateRangePicker from 'react-bootstrap-daterangepicker';
 import 'bootstrap-daterangepicker/daterangepicker.css';
 import './FilterMovie.css';
-
+import { store } from '../../store';
+import { connect } from 'react-redux';
 class FilterMovie extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            sort_by: '',
+            /* sort_by: '',
             range: [{
                 startDate: new Date(),
                 endDate: new Date(),
                 key: 'selection'
-            }],
+            }], */
             sortOptions: [
                 { value: 'popularity.asc', text: 'Popularity Asc' },
                 { value: 'popularity.desc', text: 'Popularity Desc' },
@@ -28,34 +29,13 @@ class FilterMovie extends React.Component {
         };
     }
 
-    filterChange = (event) => {
-        let change = {
-            sortValue: 'popularity.desc',
-            dates: {
-                releaseDateGte: '',
-                releaseDateLte: '',
-            }
-        };
-        if (event.target && event.target.getAttribute('name') === 'sort_by') {
-            this.setState({
-                sort_by: event.target.value
-            });
-            change.sortValue = event.target.value;
-        }
-        if (event.endDate || event.startDate) {
-            change.dates.releaseDateGte = event.startDate.format('YYYY-MM-DD');
-            change.dates.releaseDateLte = event.endDate.format('YYYY-MM-DD');
-        }
-        this.props.setFilter(change);
-    }
-
     render() {
         return (
             <div className="filter">
                 <div className="c-row">
                     <div className="c-col">
                         <label htmlFor="sort_by">Sort By</label>
-                        <select name="sort_by" className="form-select" id="sort_by" value={this.state.sort_by} onChange={this.filterChange}>
+                        <select name="sort_by" className="form-select" id="sort_by" value={this.props.sort_by} onChange={this.props.filterChange}>
                             <option value="">--select any sort order--</option>
                             {this.state.sortOptions.map((option, index) => {
                                 return (
@@ -65,7 +45,7 @@ class FilterMovie extends React.Component {
                         </select>
                     </div>
                     <div className="c-col">
-                        <DateRangePicker initialSettings={{ startDate: new Date(), endDate: new Date() }} onApply={(event, picker) => this.filterChange(picker)} >
+                        <DateRangePicker initialSettings={{ startDate: new Date(), endDate: new Date() }} onApply={(event, picker) => this.props.filterChange(picker)} >
                             <button tyep="button" className="btn btn-outline-primary">Select Date Range</button>
                         </DateRangePicker>
                     </div>
@@ -76,4 +56,44 @@ class FilterMovie extends React.Component {
     }
 }
 
-export default FilterMovie;
+function mapStateToProps(state) {
+    return {
+        sort_by: state.filter.sortValue,
+    };
+}
+
+const filterChange = (event) => {
+    let change = {
+        sortValue: 'popularity.desc',
+        dates: {
+            releaseDateGte: '',
+            releaseDateLte: '',
+        }
+    };
+    if (event.target && event.target.getAttribute('name') === 'sort_by') {
+        /* this.setState({
+            sort_by: event.target.value
+        }); */
+        change.sortValue = event.target.value;
+    }
+    if (event.endDate || event.startDate) {
+        change.dates.releaseDateGte = event.startDate.format('YYYY-MM-DD');
+        change.dates.releaseDateLte = event.endDate.format('YYYY-MM-DD');
+    }
+    change.type = 'filter/update';
+    // store.dispatch(change);
+    return change;
+    /* console.log(store.getState());
+    this.props.setFilter(change); */
+}
+
+const mapDispatchToProps = {
+    filterChange
+}
+
+const filterMovie = connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(FilterMovie);
+
+export default filterMovie;

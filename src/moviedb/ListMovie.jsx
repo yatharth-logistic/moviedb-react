@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import BsModal from '../components/modal';
 import './ListMovie.css';
+import { connect } from 'react-redux';
 
 class ListMovie extends React.Component {
     constructor(props) {
@@ -86,4 +87,12 @@ class ListMovie extends React.Component {
 
 }
 
-export default ListMovie;
+function mapStateToProps(state) {
+    return {
+        filterData: state.filter
+    }
+}
+
+const listMovie = connect(mapStateToProps)(ListMovie);
+
+export default listMovie;

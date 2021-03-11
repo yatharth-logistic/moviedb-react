@@ -4,6 +4,7 @@ import FilterMovie from './filter/FilterMovie';
 import axios from 'axios';
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 import './Moviedb.css';
+import { store } from '../store';
 
 class Moviedb extends React.Component {
 
@@ -26,11 +27,14 @@ class Moviedb extends React.Component {
         });
     }
 
-    setFilterChange = (change) => {
+    /* setFilterChange = (change) => {
         this.setState({
             filter: change
         });
-    }
+        this.setState({
+            filter: store.getState().filter
+        });
+    } */
 
     render() {
         return (
@@ -55,8 +59,8 @@ class Moviedb extends React.Component {
                         <div className="c-content">
                             <Switch>
                                 <Route path="/movie">
-                                    <FilterMovie setFilter={this.setFilterChange} />
-                                    <ListMovie filterData={this.state.filter} />
+                                    <FilterMovie />
+                                    <ListMovie />
                                 </Route>
                                 <Route path="/">
                                 </Route>
