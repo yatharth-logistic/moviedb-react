@@ -1,5 +1,4 @@
 import React from 'react';
-import moment from 'moment';
 import DateRangePicker from 'react-bootstrap-daterangepicker';
 import 'bootstrap-daterangepicker/daterangepicker.css';
 import './FilterMovie.css';
@@ -10,6 +9,7 @@ class FilterMovie extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            error: false,
             /* sort_by: '',
             range: [{
                 startDate: new Date(),
@@ -33,12 +33,20 @@ class FilterMovie extends React.Component {
         };
     }
 
+    createError = () => {
+        this.setState({
+            error: true
+        });
+    }
     render() {
+        if (this.state.error) {
+            throw new Error('You can only use error boundary from the render method');
+        }
         return (
             <div className="filter">
                 <div className="c-row">
                     <div className="c-col">
-                        <label htmlFor="sort_by">Sort By</label>
+                        <label htmlFor="sort_by" onClick={this.createError}>Sort By</label>
                         <select name="sort_by" className="form-select" id="sort_by" value={this.props.sort_by} onChange={this.props.filterChange}>
                             <option value="">--select any sort order--</option>
                             {this.state.sortOptions.map((option, index) => {
@@ -75,9 +83,6 @@ const filterChange = (event) => {
         }
     };
     if (event.target && event.target.getAttribute('name') === 'sort_by') {
-        /* this.setState({
-            sort_by: event.target.value
-        }); */
         change.sortValue = event.target.value;
     }
     if (event.endDate || event.startDate) {

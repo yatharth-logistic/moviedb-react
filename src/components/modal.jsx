@@ -41,12 +41,10 @@ class BsModal extends React.Component {
             method: 'GET',
             url: `https://api.themoviedb.org/3/movie/${this.props.movieId}?api_key=a0acb84bc12a6a187fbf5cf4431ea867`
         }).then(res => {
-            this.timeOut = setTimeout(() => {
-                this.setState({
-                    movieInfo: res.data,
-                    // loader: false,
-                });
-            }, 1000);
+            this.setState({
+                movieInfo: res.data,
+                loader: false
+            });
         });
     }
     render() {
@@ -56,10 +54,6 @@ class BsModal extends React.Component {
         };
         const fntw = {
             fontWidth: 700,
-        };
-        const dacoration = {
-            textDecoration: 'none',
-            color: 'white',
         };
         const mxw = {
             maxWidth: '27%',
@@ -75,41 +69,41 @@ class BsModal extends React.Component {
                         <div className="modal-body">
                             {(this.state.movieInfo &&
                                 this.state.movieInfo.original_title) ? (
-                                    <div className="container-fluid">
-                                        <div className="poster_color">
-                                            <div className="row m-1">
-                                                <div className="col-md-4 py-4 mr-2 pr-0" style={mxw}>
-                                                    <img className="poster_image rounded shadow-lg"
-                                                        src={'https://www.themoviedb.org/t/p/w300_and_h450_bestv2' + this.state.movieInfo.poster_path}
-                                                        style={ratio} alt="Poster of moive" />
-                                                </div>
-                                                <div className="col-md-6 mt-5 ml-3" style={{ marginLeft: '2em' }}>
-                                                    <h2>
-                                                        <span id="original_title" style={fntw}>
-                                                            {this.state.movieInfo.original_title}
-                                                        </span>
-                                                    </h2>
-                                                    <b>OverView</b>
-                                                    <h6 id="overview">
-                                                        {this.state.movieInfo.overview}
-                                                    </h6>
-                                                    <b>Popularity</b>
-                                                    <h6 id="popularity">
-                                                        {this.state.movieInfo.popularity}
-                                                    </h6>
-                                                    <b>Release Date</b>
-                                                    <h6 id="release_date">
-                                                        {this.state.movieInfo.release_date}
-                                                    </h6>
-                                                </div>
+                                <div className="container-fluid">
+                                    <div className="poster_color">
+                                        <div className="row m-1">
+                                            <div className="col-md-4 py-4 mr-2 pr-0" style={mxw}>
+                                                <img className="poster_image rounded shadow-lg"
+                                                    src={'https://www.themoviedb.org/t/p/w300_and_h450_bestv2' + this.state.movieInfo.poster_path}
+                                                    style={ratio} alt="Poster of moive" />
+                                            </div>
+                                            <div className="col-md-6 mt-5 ml-3" style={{ marginLeft: '2em' }}>
+                                                <h2>
+                                                    <span id="original_title" style={fntw}>
+                                                        {this.state.movieInfo.original_title}
+                                                    </span>
+                                                </h2>
+                                                <b>OverView</b>
+                                                <h6 id="overview">
+                                                    {this.state.movieInfo.overview}
+                                                </h6>
+                                                <b>Popularity</b>
+                                                <h6 id="popularity">
+                                                    {this.state.movieInfo.popularity}
+                                                </h6>
+                                                <b>Release Date</b>
+                                                <h6 id="release_date">
+                                                    {this.state.movieInfo.release_date}
+                                                </h6>
                                             </div>
                                         </div>
                                     </div>
-                                ) : (
-                                    <div className="row justify-content-center">
-                                        <CustomLoader />
-                                    </div>
-                                )}
+                                </div>
+                            ) : (
+                                <div className="row justify-content-center">
+                                    <CustomLoader />
+                                </div>
+                            )}
                         </div>
                         <div className="modal-footer">
                             <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>

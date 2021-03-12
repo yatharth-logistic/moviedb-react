@@ -4,13 +4,16 @@ import FilterMovie from './filter/FilterMovie';
 import axios from 'axios';
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 import './Moviedb.css';
-import { store } from '../store';
+import ErrorHandleComponent from '../components/ErrorHandleComponent';
 
 class Moviedb extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
+            abcd: false,
+            error: false,
+            errorInfo: null,
             filter: {
                 sortValue: 'popularity.desc',
                 dates: {
@@ -26,15 +29,6 @@ class Moviedb extends React.Component {
             console.log(error);
         });
     }
-
-    /* setFilterChange = (change) => {
-        this.setState({
-            filter: change
-        });
-        this.setState({
-            filter: store.getState().filter
-        });
-    } */
 
     render() {
         return (
@@ -59,7 +53,9 @@ class Moviedb extends React.Component {
                         <div className="c-content">
                             <Switch>
                                 <Route path="/movie">
-                                    <FilterMovie />
+                                    <ErrorHandleComponent>
+                                        <FilterMovie />
+                                    </ErrorHandleComponent>
                                     <ListMovie />
                                 </Route>
                                 <Route path="/">
