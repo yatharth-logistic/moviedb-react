@@ -23,6 +23,10 @@ class FilterMovie extends React.Component {
                 { value: 'release_date.desc', text: 'Release Date Desc' },
                 { value: 'revenue.asc', text: 'Revenue Asc' },
                 { value: 'revenue.desc', text: 'Revenue Desc' },
+                { value: 'vote_average.asc', text: 'Vote Average Asc' },
+                { value: 'vote_average.desc', text: 'Vote Average Desc' },
+                { value: 'vote_count.asc', text: 'Vote Count Asc' },
+                { value: 'vote_count.desc', text: 'Vote Count Desc' },
                 { value: 'primary_release_date.asc', text: 'Primary Release Date Asc' },
                 { value: 'primary_release_date.desc', text: 'Primary Release Date Desc' }
             ],
