@@ -3,8 +3,8 @@ import moment from 'moment';
 import DateRangePicker from 'react-bootstrap-daterangepicker';
 import 'bootstrap-daterangepicker/daterangepicker.css';
 import './FilterMovie.css';
-import { store } from '../../store';
 import { connect } from 'react-redux';
+import { filterChangeAction } from '../../actions';
 class FilterMovie extends React.Component {
 
     constructor(props) {
@@ -80,11 +80,7 @@ const filterChange = (event) => {
         change.dates.releaseDateGte = event.startDate.format('YYYY-MM-DD');
         change.dates.releaseDateLte = event.endDate.format('YYYY-MM-DD');
     }
-    change.type = 'filter/update';
-    // store.dispatch(change);
-    return change;
-    /* console.log(store.getState());
-    this.props.setFilter(change); */
+    return filterChangeAction(change);
 }
 
 const mapDispatchToProps = {

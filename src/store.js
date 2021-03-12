@@ -1,6 +1,8 @@
 import { createStore } from 'redux';
+import { createReducer } from '@reduxjs/toolkit';
+import { filterChangeAction } from './actions';
 
-const filter = {
+/* const filter = {
     filter: {
         sortValue: 'popularity.desc',
         dates: {
@@ -19,16 +21,33 @@ function reducer(state = filter, action) {
             ...state,
             filter: {
                 ...state.filter,
-                sortValue: action.sortValue,
+                sortValue: action.payload.sortValue,
                 dates: {
                     ...state.filter.dates,
-                    releaseDateGte: action.dates.releaseDateGte,
-                    releaseDateLte: action.dates.releaseDateLte
+                    releaseDateGte: action.payload.dates.releaseDateGte,
+                    releaseDateLte: action.payload.dates.releaseDateLte
                 }
             }
         };
     }
     return state;
-}
+} */
 
-export const store = createStore(reducer);
+const initialFilter = {
+    filter: {
+        sortValue: 'popularity.desc',
+        dates: {
+            releaseDateGte: '',
+            releaseDateLte: '',
+        }
+    }
+};
+
+const optimizedReducer = createReducer(initialFilter, (builder) => {
+    builder.addCase(filterChangeAction, (state, action) => {
+        console.log('optimizedReducer called at filterChangeAction');
+        state.filter = action.payload;
+    });
+});
+
+export const store = createStore(optimizedReducer);
