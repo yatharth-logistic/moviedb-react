@@ -4,6 +4,7 @@ import 'bootstrap-daterangepicker/daterangepicker.css';
 import './FilterMovie.css';
 import { connect } from 'react-redux';
 import { filterChangeAction } from '../../actions';
+import RemeberMe from '../../components/Remember';
 class FilterMovie extends React.Component {
 
     constructor(props) {
@@ -39,6 +40,7 @@ class FilterMovie extends React.Component {
         });
     }
     render() {
+        console.log('filterMovie render')
         if (this.state.error) {
             throw new Error('You can only use error boundary from the render method');
         }
@@ -46,7 +48,7 @@ class FilterMovie extends React.Component {
             <div className="filter">
                 <div className="c-row">
                     <div className="c-col">
-                        <label htmlFor="sort_by" onClick={this.createError}>Sort By</label>
+                        <label htmlFor="sort_by" onClick={this.createError}>Sort By <RemeberMe testVal={this.props.sort_by} /></label>
                         <select name="sort_by" className="form-select" id="sort_by" value={this.props.sort_by} onChange={this.props.filterChange}>
                             <option value="">--select any sort order--</option>
                             {this.state.sortOptions.map((option, index) => {
@@ -101,4 +103,4 @@ const filterMovie = connect(
     mapDispatchToProps
 )(FilterMovie);
 
-export default filterMovie;
+export default React.memo(filterMovie);
