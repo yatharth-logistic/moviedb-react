@@ -5,6 +5,7 @@ import axios from 'axios';
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 import './Moviedb.css';
 import ErrorHandleComponent from '../components/ErrorHandleComponent';
+import InfiniteScroll from '../InfiniteScroll/InfiniteScroll';
 
 class Moviedb extends React.Component {
 
@@ -47,6 +48,9 @@ class Moviedb extends React.Component {
                                     <li>
                                         <Link to="/movie">Movie</Link>
                                     </li>
+                                    <li>
+                                        <Link to="/infinite-scroll">Infinite Scroll</Link>
+                                    </li>
                                 </ul>
                             </aside>
                         </div>
@@ -57,6 +61,11 @@ class Moviedb extends React.Component {
                                         <FilterMovie />
                                     </ErrorHandleComponent>
                                     <ListMovie />
+                                </Route>
+                                <Route path='/infinite-scroll'>
+                                    <ErrorHandleComponent>
+                                        <InfiniteScroll />
+                                    </ErrorHandleComponent>
                                 </Route>
                                 <Route path="/">
                                 </Route>
